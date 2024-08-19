@@ -1,0 +1,37 @@
+
+% Thesis Abstract -----------------------------------------------------
+
+
+%\begin{abstractslong}    %uncommenting this line, gives a different abstract heading
+\begin{abstracts}        %this creates the heading for the abstract page
+
+Immunohistochemistry (IHC) test is done to determine the intensity of gene expression of
+the human epidermal growth factor receptor 2 (HER2) protein responsible for the growth of healthy breast cells. If this gene is over expressed in patients diagnosed with breast
+cancer, it will lead to rapid spread of the tumor. However, tumors that are HER2-positive
+can be treated with effective chemotherapy if identified early. Traditional manual HER2
+assessments are expensive, prone to subjectivity from pathologists and time-consuming.
+This study investigates the use of the generative AI technique, Stable Diffusion, for generating a "digitally stained" immunohistochemical (IHC) image from Hematoxylin and
+Eosin (H&E) whole slide images (WSIs) and then classify them to obtain a corresponding
+HER2 score. Earlier attempts to perform digital staining or style transfer used Generative
+Adversarial Neural Networks (GANNs) which yielded mixed results at best.
+
+Stable Diffusion is a recent technique and has been at the forefront of the generative AI
+revolution for generating extremely detailed and hyper-realistic images from text prompts
+(text-to-image) or from a reference image (image-to-image). The jump in quality is due to
+this technique leveraging the concept of training a model to transform random noise to the desired image described. Here, the image-to-image method is used to ground the model in the source H&E image to then generate a corresponding IHC stained image.
+
+The pre-trained open-sourced Stable Diffusion model, SDXL from Stability.ai is fine-tuned
+with a dataset containing 4,870 registered image pairs of IHC and H&E stained WSIs from
+the BCI dataset (Liu et al., n.d.). The accuracy is compared with the results obtained from
+other algorithms that used GANNs to achieve the style transfer. A final subjective
+validation by a pathologist is also done on the generated IHC stain images to test for
+efficacy.
+
+
+
+\end{abstracts}
+%\end{abstractlongs}
+
+
+% ---------------------------------------------------------------------- 
+

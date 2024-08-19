@@ -1,0 +1,105 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- introduction file header -----------------------
+\chapter{Introduction}
+
+% the code below specifies where the figures are stored
+\ifpdf
+    \graphicspath{{1_introduction/figures/PNG/}{1_introduction/figures/PDF/}{1_introduction/figures/}}
+\else
+    \graphicspath{{1_introduction/figures/EPS/}{1_introduction/figures/}}
+\fi
+
+% ----------------------------------------------------------------------
+%: ----------------------- introduction content ----------------------- 
+% ----------------------------------------------------------------------
+
+Breast cancer is one of the most common malignancies affecting women worldwide, and accurate diagnosis is critical for effective treatment planning. A key biomarker in breast cancer pathology is the Human Epidermal Growth Factor Receptor 2 (HER2), whose over-expression is associated with aggressive tumor behavior and poor prognosis. Accurate HER2 scoring is essential for determining eligibility for targeted therapies, such as trastuzumab. Traditionally, HER2 scoring is performed manually on immunohistochemically (IHC) stained tissue sections, a process that is not only time-consuming but also prone to inter-observer variability. This subjectivity can lead to inconsistent diagnoses and treatment decisions, highlighting the need for more reliable and standardized approaches.
+
+In recent years, the advent of digital pathology has opened new avenues for automating and improving the accuracy of diagnostic processes. Whole Slide Imaging (WSI) allows for the digitization of entire tissue slides, enabling advanced computational techniques to be applied to histopathological analysis. Despite the potential of these technologies, digital IHC staining from Hematoxylin and Eosin (H\&E) stained slides, which are the standard in many pathology labs, remains a challenging task. Accurate digital transformation of H&E images into IHC-stained representations would significantly streamline the diagnostic process by eliminating the need for separate staining procedures and manual scoring.
+
+This thesis explores the application of Stable Diffusion, a cutting-edge deep learning technique, to digitally transform H&E WSIs into IHC-stained WSIs for subsequent HER2 scoring. Stable Diffusion has gained attention for its ability to generate high-quality, contextually accurate images, making it a promising candidate for this task. The primary motivation for this research lies in the potential to enhance the efficiency, accuracy, and consistency of HER2 scoring in breast cancer pathology. By leveraging digital tools, this study aims to reduce the reliance on manual staining and scoring, thereby contributing to more standardized and reliable diagnostic practices.
+
+The methodology proposed in this research involves using a pre-trained Stable Diffusion model to perform digital IHC staining on H&E WSIs. However, adapting the existing Stable Diffusion model for fine-tuning specific to breast cancer pathology has proven to be a significant challenge. Despite extensive efforts, the research has faced technical obstacles in modifying the pre-trained model to generate satisfactory results. This limitation underscores the complexity of applying general-purpose deep learning models to specialized medical imaging tasks.
+
+While the research is ongoing and results have yet to be achieved, this study contributes to the growing body of work on digital pathology and highlights the potential and challenges of using advanced machine learning techniques in medical diagnostics. The insights gained from this exploration may guide future work in developing more effective methodologies for digital staining and automated HER2 scoring, ultimately improving breast cancer diagnosis and patient outcomes.
+
+
+
+% here we declare a new section
+
+\section{Aims and Objectives} 
+
+The main question that this dissertation addresses is  
+In order to address this question, this work focuses on the following issues in the context of :
+
+\begin{itemize}
+
+\item Firstly, . . .
+
+\item Secondly, . . . 
+
+\end{itemize}
+
+
+
+% here we declare a new section
+\section{Methodology} 
+
+In order to address this question the following approach was taken. 
+ 
+ 
+% here we declare a new section
+\section{Research Contribution}
+
+The primary research contribution is: 
+
+
+
+
+
+\section{Thesis Outline} 
+
+The remaining chapters of this dissertation are as follows:
+
+
+\emph{Chapter Two} is an introductory discussion to . . .
+
+\emph{Chapter Three} is a historical review of  . . .
+
+\emph{Chapter Four} presents the  . . . 
+
+\emph{Chapter Five} describes the . . .
+
+\emph{Chapter Six} draws conclusions and evaluates the . . .  Lastly, it suggests possible future works. 
+
+\vspace{5 mm}
+
+A series of documents have been included in the Appendix section of this dissertation. These are:
+
+\begin{itemize}
+\item \emph{Appendix A} outlines . . .
+
+\item \emph{Appendix B} presents . . .
+
+\item \emph{Appendix C} includes . . .
+\end{itemize} 
+
+\vspace{5 mm}
+
+Attached to this dissertation is a CD containing the following items:
+
+\begin{itemize}
+\item \emph{folder 1}: . . .
+
+\item \emph{folder 2}: . . .
+
+\end{itemize}
+
+
+% ----------------------------------------------------------------------
+
+
+

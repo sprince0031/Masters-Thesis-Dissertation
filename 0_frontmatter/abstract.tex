@@ -5,27 +5,17 @@
 %\begin{abstractslong}    %uncommenting this line, gives a different abstract heading
 \begin{abstracts}        %this creates the heading for the abstract page
 
-Immunohistochemistry (IHC) test is done to determine the intensity of gene expression of
-the human epidermal growth factor receptor 2 (HER2) protein responsible for the growth of healthy breast cells. If this gene is over expressed in patients diagnosed with breast
-cancer, it will lead to rapid spread of the tumor. However, tumors that are HER2-positive
-can be treated with effective chemotherapy if identified early. Traditional manual HER2
-assessments are expensive, prone to subjectivity from pathologists and time-consuming.
-This study investigates the use of the generative AI technique, Stable Diffusion, for generating a "digitally stained" immunohistochemical (IHC) image from Hematoxylin and
-Eosin (H&E) whole slide images (WSIs) and then classify them to obtain a corresponding
-HER2 score. Earlier attempts to perform digital staining or style transfer used Generative
-Adversarial Neural Networks (GANNs) which yielded mixed results at best.
+\textbf{Objective: }The purpose of this research is to explore the use of the generative AI technique, Stable Diffusion, for the creation of immunohistochemical (IHC) images 'digitally stained' from Hematoxylin and Eosin (H\&E) whole slide images (WSI) and classifying thereof to obtain a corresponding HER2 score. The purpose is to check if the approach provides an efficient, cost-effective, and consistent alternative to current standard practice which is known to be expensive, subjective and time-consuming for the traditional manual HER2 assessment procedure.
 
-Stable Diffusion is a recent technique and has been at the forefront of the generative AI
-revolution for generating extremely detailed and hyper-realistic images from text prompts
-(text-to-image) or from a reference image (image-to-image). The jump in quality is due to
-this technique leveraging the concept of training a model to transform random noise to the desired image described. Here, the image-to-image method is used to ground the model in the source H&E image to then generate a corresponding IHC stained image.
+\textbf{Design:} We use the state-of-the-art Stable Diffusion technique, which is a generative AI model tested to produce very detailed and realistic images. In this study, we implement the image-to-image approach of Stable Diffusion for the first time by pre-training the model on source H\&E images in order to generate corresponding IHC-stained images. We use their pre-trained model SDXL from Stability.ai and fine-tune it using our dataset consisting of 4,870 registered image pairs of IHC- and H\&E-stained WSIs coming from the BCI dataset.
 
-The pre-trained open-sourced Stable Diffusion model, SDXL from Stability.ai is fine-tuned
-with a dataset containing 4,870 registered image pairs of IHC and H&E stained WSIs from
-the BCI dataset (Liu et al., n.d.). The accuracy is compared with the results obtained from
-other algorithms that used GANNs to achieve the style transfer. A final subjective
-validation by a pathologist is also done on the generated IHC stain images to test for
-efficacy.
+\textbf{Setting:} The study was conducted inside a digital pathology framework, which puts into action datasets and open-source AI models available from public sources. Setting includes a computational environment for model training and fine-tuning. The final set of images generated is validated subjectively by a pathologist to check the usability of the images.
+
+\textbf{Results:} The fine-tuned Stable Diffusion model generated IHC-stained images, which were later classified to obtain HER2 scores. For comparison, the accuracy of the digital staining and scoring processes was made to earlier studies using Generative Adversarial Neural Networks (GANs) for style transfer. Initial comparison showed that Stable Diffusion performs better in generating digital stains of high quality; however, final efficacy and accuracy needs to be validated subjectively by the pathologist.
+
+\textbf{Conclusions:} In the present study, we show the feasibility to apply Stable Diffusion as a core technique in Digital Pathology, particularly for creation of IHC-stained images from H\&E WSIs enabling HER2 scoring in breast cancer diagnostics. The realized results are encouraging; however, future validation by practicing clinicians is necessary to fully assess practical applicability of this approach. The use of Stable Diffusion may provide more standard and hence, reliable HER2 assessment. It will improve the overall workflow with regard to the diagnosis and patient outcome in the treatment of breast cancer.
+
+\textbf{Keywords:} Stable Diffusion, Digital Pathology, HER2 Scoring, Immunohistochemistry, Hematoxylin and Eosin, Whole Slide Images, Generative AI, Breast Cancer, Deep Learning,
 
 
 

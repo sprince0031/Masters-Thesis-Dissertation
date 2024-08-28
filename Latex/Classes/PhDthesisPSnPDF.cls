@@ -17,14 +17,14 @@
 %:-------------------------- report or book -----------------------
 
 %If you want to use a Report style document then uncomment the following 3 lines and comment the below 8 book style lines:
-%\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-%\ProcessOptions\relax
-%%\LoadClass[a4paper]{report}
-%\ifx\pdfoutput\undefined
+% \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+% \ProcessOptions\relax
+% \LoadClass[a4paper]{report}
+% \ifx\pdfoutput\undefined
 %   \LoadClass[dvips, a4paper]{report}
-%\else
+% \else
 %   \LoadClass[pdftex, a4paper]{report}
-%\fi
+% \fi
 
 %%Bibliography
 %%uncomment next line to change bibliography name to references for Report document class
@@ -51,7 +51,7 @@
 \usepackage[english]{babel}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage[perpage]{footmisc}
-\usepackage[round, sort, numbers, authoryear]{natbib}
+\usepackage[style=authoryear-ibid,backend=biber]{biblatex}
 \usepackage{ifthen}
 \usepackage{multicol} % for pages with multiple text columns, e.g. References
 \setlength{\columnsep}{20pt} % space between columns; default 10pt quite narrow
@@ -170,8 +170,8 @@
 
 %: Uncomment this secion for two-sided printing
 % ------------------------------
-\setlength{\oddsidemargin}{1.5cm}
-\setlength{\evensidemargin}{0 cm}
+\setlength{\oddsidemargin}{1cm}
+\setlength{\evensidemargin}{0cm}
 \setlength{\topmargin}{1mm}
 \setlength{\headheight}{1.36cm}
 \setlength{\headsep}{1.00cm}

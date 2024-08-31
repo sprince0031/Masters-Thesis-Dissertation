@@ -23,6 +23,8 @@
 \usepackage{alltt} 
 \usepackage{multirow}
 \usepackage{color}
+\usepackage{array} % required for text wrapping in tables
+\usepackage{float} % to prevent repositioning of tables
 
 
 
@@ -78,8 +80,7 @@ H\&E Slides Using Stable Diffusion)
                   /OpenAction (fitbh)  }
 \fi
 
-\title{Digital IHC Staining of WSIs from
-H\&E Slides Using Stable Diffusion}
+\title{Stain Diffusion: Generating HER2 Immunohistochemical Images from H\&E Stains using Stable Diffusion and ControlNet}
 % \title{Leveraging Machine Learning for Automated HER2 Scoring in Breast Cancer Pathology }
 
 
@@ -96,7 +97,7 @@ H\&E Slides Using Stable Diffusion}
 % here the links to the Institution you belong to
   \faculty{\href{https://www.ul.ie/scieng/schools-and-departments/department-computer-science-and-information-systems}{Department of Computer Science and Information Systems}}
   \department{\href{http://www.csis.ul.ie}{Faculty of Science and Engineering}}
-  \university{\href{http://www.ul.ie}{University of Limerick}}
+  \university{\href{http://www.ul.ie}{Univers\usepackage{array} % required for text wrapping in tablesity of Limerick}}
 
   % The crest is a graphics file of the logo of your research institution.
   % Place it in ./0_frontmatter/figures and specify the width
@@ -160,13 +161,13 @@ H\&E Slides Using Stable Diffusion}
 
  \begin{tabbing}
 2. Supervisor: \= Dr. James Brown \\
- \>  \= Department of Biological Sciences \\
+ \>  \= Biological Sciences \\
  \>  \= University \emph{of} Limerick \\
  \>  \= Ireland \\
 \end{tabbing}
 
 \begin{tabbing}
-3. Supervisor: \= Dr. Maire Lavelle \\
+3. Supervisor: \= Dr. Máire Lavelle \\
  \>  \= Histopathology \\
  \>  \= University Hospital Limerick \\
  \>  \= Ireland \\
@@ -243,7 +244,7 @@ H\&E Slides Using Stable Diffusion}
 
 \include{1_introduction/introduction}	
 \include{2_LiteratureSurvey/chapter2}
-\include{3_Datasets/chapter3}			
+% \include{3_Datasets/chapter3}			
 \include{4_ResearchMethodology/chapter4}
 \include{5_Results/chapter5}	
 \include{6_conclusions/conclusions} 
@@ -267,8 +268,11 @@ H\&E Slides Using Stable Diffusion}
 
 % \begin{small} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
 
-\renewcommand{\bibname}{References} % changes the header; default: Bibliography
-\printbibliography
+% \renewcommand{\bibname}{References} % changes the header; default: Bibliography
+\printbibliography[
+heading=bibintoc,
+title={References}
+]
 % \end{small}
 
 %\end{multicols}

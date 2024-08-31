@@ -18,7 +18,7 @@
 
 Breast cancer is one of the most prevalent cancer types among women worldwide \parencite{Sung2021GlobalCountries}, which requires proper diagnosis for planning effective treatment. As with any cancer type, early and accurate diagnosis is critical for improving patient outcomes. Given that cancer pathology is a manual and time-consuming process, machine learning (ML) techniques are making significant strides in the field of breast cancer diagnosis, offering promising avenues to complement traditional methods. A recent systematic review by \textcite{Nemade2022ATechniques} considered 162 research publications for the time period of 2015-2021 and investigated the use of machine intelligence techniques in breast cancer diagnosis. The review found that ML algorithms demonstrated promising results in tasks such as computer-aided diagnosis (CAD) using mammograms, ultrasound image analysis, and even gene expression profiling. 
 
-One area of machine learning research that has exploded in recent years is generative AI or Foundational Models \parencite{Bommasani2021OnModels} with the introduction of Large Language Models (LLMs) such as ChatGPT \parencite{Brown2020LanguageLearners} \parencite{OpenAI2023GPT-4Report}, Gemini \parencite{GeminiTeam2023Gemini:Models}, Claude, etc., and image generation models such as Stable Diffusion \parencite{Rombach2021High-ResolutionModels}, DALL-E \parencite{Ramesh2021Zero-ShotGeneration}. Midjourney and more. Exploring new use cases for such ground breaking models is essential as they can lead to important discoveries especially in cancer research with the increasing adoption of digital pathology which opens up new avenues for the automation of diagnostic processes with increased accuracy. Whole Slide Imaging (WSI) is the complete digitization of whole tissue slides, and this has led to the application of various sophisticated computational techniques to histopathologic analysis \parencite{Aeffner2019IntroductionAssociation.} \parencite{Madabhushi2016ImageOpportunities.}.
+One area of machine learning research that has exploded in recent years is generative AI or Foundational Models \parencite{Bommasani2021OnModels} with the introduction of Large Language Models (LLMs) such as ChatGPT \parencite{Brown2020LanguageLearners} \parencite{OpenAI2023GPT-4Report}, Gemini \parencite{GeminiTeam2023Gemini:Models}, Claude, etc., and image generation models such as Stable Diffusion \parencite{Rombach2021High-ResolutionModels}, DALL-E \parencite{Ramesh2021Zero-ShotGeneration}, Midjourney and more. Exploring new use cases for such ground breaking models is essential as they can lead to important discoveries especially in cancer research with the increasing adoption of digital pathology which opens up new avenues for the automation of diagnostic processes with increased accuracy. Whole Slide Imaging (WSI) is the complete digitization of whole tissue slides, and this has led to the application of various sophisticated computational techniques to histopathologic analysis \parencite{Aeffner2019IntroductionAssociation.} \parencite{Madabhushi2016ImageOpportunities.}.
 
 \section{Motivation}
 
@@ -26,7 +26,9 @@ In this thesis, the main focus is on the Human epidermal growth factor receptor 
 
 \section{Aims and Objectives} 
 
-With the above stated problems with HER2 scoring established, this thesis investigates the application of Stable Diffusion \parencite{Rombach2021High-ResolutionModels} to generate IHC-stained WSIs from corresponding H\&E WSIs. Stable Diffusion has been proven to be good for high-quality, contextually accurate image generation, even better than Generative Adversarial Neural Netwoks (GANNs) that were considered to be state-of-the-art in generative models \parencite{Baranchuk2021Label-EfficientModels}. Hence Stable Diffusion is an appealing candidate for the task. The key to this is to fine-tune a pre-trained Stable Diffusion model with a custom dataset containing pairs of the H\&E and IHC WSIs. 
+With the above stated problems with HER2 scoring established, this thesis investigates the application of Stable Diffusion \parencite{Rombach2021High-ResolutionModels} to generate IHC-stained WSI patches from corresponding H\&E WSI patches. Stable Diffusion has been proven to be good for high-quality, contextually accurate image generation, even better than Generative Adversarial Neural Netwoks (GANNs) that were considered to be state-of-the-art in generative models \parencite{Baranchuk2021Label-EfficientModels}. Hence Stable Diffusion is an appealing candidate for the task. The key to this is to fine-tune a pre-trained Stable Diffusion model with a custom dataset containing pairs of the H\&E and IHC WSI patches. 
+
+\vspace{5 mm}
 
 Thus the main research questions that are aimed to be addressed in this thesis are:
 
@@ -43,12 +45,13 @@ Thus the main research questions that are aimed to be addressed in this thesis a
 
 \section{Research Contribution}
 
-As conveyed in the research questions, the initially planned scope was to not only fine-tune a pre-trained diffusion model with H\&E images as additional input to a prompt that describes the IHC score; but also to device a way for the model to output the score along with the generated IHC image while only giving the H\&E image as input. While the first part of this goal was achieved using a ControlNet \parencite{Zhang2023AddingModels} for fine-tuning the model, the latter part turned out to be beyond the scope of this thesis due to time and resource constraints. Ideas for further research for the third research question is detailed in the future scope subsection of chapter 4, 
+As conveyed in the research questions, the initially planned scope was to not only fine-tune a pre-trained diffusion model with H\&E images as additional input to a prompt that describes the IHC score; but also to device a way for the model to output the score along with the generated IHC image while only giving the H\&E image as input. While the first part of this goal was achieved using a ControlNet \parencite{Zhang2023AddingModels} for fine-tuning the model, the latter part turned out to be beyond the scope of this thesis due to time and resource constraints. Ideas for further research for the third research question above are detailed in the future scope subsection of chapter 5. Another pertinent research area that has not been covered by this research would be to understand the morphological features of the H\&E stain that the model uses to obtain an IHC stain by using explainable AI techniques. This would help pathologists better understand the correlation and potentially also improve their own manual scoring process.
+
+\pagebreak
 
 \section{Thesis Outline} 
 
 The remaining chapters of this dissertation are as follows:
-
 
 \emph{Chapter Two} is an introductory discussion to Stable Diffusion and ControlNets. It also provides a review of the research that tried using GANNs for IHC stain generation which is where the main research question for this thesis was derived from. 
 
@@ -71,16 +74,6 @@ A series of documents have been included in the Appendix section of this dissert
 \end{itemize} 
 
 \vspace{5 mm}
-
-Attached to this dissertation is a CD containing the following items:
-
-\begin{itemize}
-\item \emph{folder 1}: . . .
-
-\item \emph{folder 2}: . . .
-
-\end{itemize}
-
 
 % ----------------------------------------------------------------------
 

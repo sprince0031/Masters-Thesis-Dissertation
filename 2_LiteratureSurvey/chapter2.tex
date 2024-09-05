@@ -99,13 +99,12 @@ This strategy proves to have worked in their own benchmarks where the Pyramid pi
 
 Stable Diffusion (SD) is arguably one of the most noteworthy developments in the generative AI space. It is a  \textbf{latent diffusion model (LDM)} \parencite{Rombach2021High-ResolutionModels} used to render high quality and high-resolution images from text prompts. The main idea behind diffusion stems from the work on \textbf{Denoising Diffusion Probabilistic Models (DDPMs)} which iteratively reverses the process of adding noise to data \parencite{Ho2020DenoisingModels}. Learning this allows for complex image generation from random noise. Perhaps the most important contribution by the research of  \textcite{Rombach2021High-ResolutionModels} is the introduction of \textit{latent space}. It can be thought of as a compressed representation of data. In other words. the SD model associates embeddings to object representations that translate to the final images we see when prompted with some text description of the image. This greatly reduces computational load by not requiring such models to operate on a per-pixel basis.
 
-
-
 This unique feature of this model presents an opportunity where it can be trained to map image representations of objects to corresponding different classes via prompts. This means it can be potentially be trained to recognise what a HER2 IHC 2+ scored WSI patch would look like for example. 
 
 \section{ControlNet}
 
-Lorem ipsum dolorem
+ControlNet introduced by \textcite{Zhang2023AddingModels} is a control architecture that integrates with diffusion models or any generative model to provide additional controls to how the output is generated. Simply put, it adds the possibility of extra input signals such as image maps that provide additional context for the base SD model to refine on. The unique feature here is that it locks the training of the base model and updates the weights of a copy network and this is further fine-tuned. 
+
 
 
 % ---------------------------------------------------------------------------

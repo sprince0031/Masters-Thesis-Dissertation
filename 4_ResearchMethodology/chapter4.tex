@@ -59,6 +59,13 @@ In the code implementation, a class called "HE\_IHC\_Dataset" that inherits the 
     \caption[Custom dataset processing class]{Code snippet of custom dataset processing class}
     \label{fig:he-ihc-dataset-class}
 \end{figure}
+\subsection{Prompt Usage for Training}
+
+The model will not have a good way to properly distinguish the classes of images just from direct input. Thus to help the model make these connections and be able to have learnt the latent representations of the images to the classes, the model was trained by giving the corresponding prompt. The prompt for each class is structured in the following syntax to give it more embeddings to potentially learn about the classes.
+
+<IHC score>, <Description of the scoring criteria/staining pattern>, <HER2 expression i.e., negative/low expression/equivocal/positive>
+
+The syntax is in essence a combination of all the descriptive parts of information available for a score given by the guidelines (Table \ref{tab:HER2 IHC Scoring Guidelines})
 
 \section{ControlNet Integration}
 
@@ -66,11 +73,11 @@ The fine-tuning code implementation using ControlNet was performed by forking th
 
 \subsection{System Setup}
 
-The experiments were performed on an A100 Nvidia 80GB server GPU. A training loop occupied approximately 30GB of VRAM on the GPU and took approximately 13 hours for 50 training epochs. The pre-trained model of Stable Diffusion used was version 2.1 <TODO: Link to appendix>.
+The experiments were performed on an A100 Nvidia 80GB server GPU. A training loop occupied approximately 30GB of VRAM on the GPU and took approximately 13 hours for 50 training epochs. The pre-trained model of Stable Diffusion used was version 2.1.
 
 \subsection{Prerequisite}
 
-Before starting the training process, there is a prerequisite to be performed which entails copying the weights of the pre-trained SD model to the trainable copy of ControlNet. This functionality is provided by the framework and only requires the running of  a single python script called. "tool_add_control.py" <TODO: Link to appendix> within the same repository. This script takes two input arguments which are the paths to the downloaded pre-trained SD model in the form of a .ckpt file and the destination path where the trainable copy is to be saved which is also in .ckpt format. This command will look like in the snippet, Figure \ref{fig:copy-sd-control}.
+Before starting the training process, there is a prerequisite to be performed which entails copying the weights of the pre-trained SD model to the trainable copy of ControlNet. This functionality is provided by the framework and only requires the running of  a single python script called. "tool\_add\_control.py" (available from source in Appendix A). within the same repository. This script takes two input arguments which are the paths to the downloaded pre-trained SD model in the form of a .ckpt file and the destination path where the trainable copy is to be saved which is also in .ckpt format. This command will look like in the snippet, Figure \ref{fig:copy-sd-control}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{4_ResearchMethodology/figures/ckpt_copy.png}
@@ -100,15 +107,33 @@ Hyper-parameters& learning rate = $1e^{-5}$, sd\_locked = True& learning rate = 
 \caption[Hyper-parameter differences between ControlNet training variations]{Hyper-parameter differences between ControlNet training variations}\label{tab:training-variation}
 \end{center}
 \end{table}
+
 Other than these, the constant hyper-parameters used are a batch size of 4, the AdamW optimiser for its better control over regularisation \parencite{Loshchilov2017DecoupledRegularization}, a standard Mean Square Error (MSE) loss function and number of epochs each of 50. 
 
 \section{Evaluation}
+
+The framework also uses the very powerful PyTorch Library module which already has a lot of automation built in for running train-validation loops, logging metrics and so on. The framework logs loss statistics to a Tensorboard compatible file which can then be fired up to gain insights in to important training statistics like loss over epochs/steps. There is also a logger training callback function that can be used to setup sampling of the generated training images to then be logged for giving us active insight to the progress of the model. The number of logging steps was set to 300 and this would run every 4 times per epoch given there are 974 batches with a batch size of 4. The final logged sample for the better performing model i.e., variation 1 is shown in Figure \ref{fig:best-train-log}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{4_ResearchMethodology/figures/v4-training-e49-b900-Result.png}
+    \caption[Final log of training sample results]{Final log of training sample results at epoch 50 and step 900 of training variation 1 of the model. The IHC scores from left to right are 3+, 1+, 1+ and 3+.}
+    \label{fig:best-train-log}
+\end{figure}
+
+The framework is set to randomly sample the number of images according to our batch size and this was one of the best results from training after looking at multiple samples qualitatively. The model seems to be able to learn to mimic the edges and overall stain structure well. However, the reconstructed target IHC have all taken on a blue hue rather than it's original brown and thus the network has learnt this behaviour as well. This is likely happening at the sampling step when it is getting trained to remove noise from the images. This should not happen and the original target should be reconstructed and this behaviour needs further investigation. This however isn't as detrimental to evaluation of the images as for IHC scoring it is the intensity of membrane staining that is considered and not the actual colour itself. Thus we can still proceed with evaluation. The model seems to have been able to make the class distinctions though they are directly more influenced by the presence of the prompt detailing the class.
+
+\subsection{Testing the Models}
+
+For model performance evaluation, the test set is used to generate corresponding IHC stains for the input H\&E stains. There were again two variations of the testing evaluated. One is by adding the corresponding prompt for he generation as an input signal while the other is seeing how it performs without the prompt. The testing was performed by running 2 custom test scripts, one for each test condition (available from source in Appendix A). This was also performed for both trained variations of the models i.e., with SD control 'True' and 'False'.
+
+\subsection{Performance Evaluation}
 
 Comparing and evaluating the results for this project is not a straightforward task. The task of comparing an image to an attempted imitation of it is not a process that any algorithm can decipher easily. The results of this type where structural variations can be acceptable if the overall pattern is very similar to the original can have merits and can be enough for providing a highly accurate IHC score that can inform pathologists faster than the manual scoring method. 
 
 Nonetheless, for this thesis, two main categories of evaluation were carried out; quantitative and qualitative. The quantitative method consists of using the Peak Signal to Noise Ratio (PSNR) and Structural Similarity (SSIM) evaluation metrics. PSNR performs a rigid pixel-to-pixel comparison which does not really paint the full picture while the SSIM method takes into account the differences in the image brightness, contrast and structure. While still not a very good benchmark to fully analyse a pair of results, it is certainly fair than PSNR.
 
-For qualitative testing, a random sample size of 20 generated IHC images were chosen via a python script <TODO: add appendix link to code> to avoid any selection bias and were independently evaluated by an expert Pathologist. The pathologist's score was compared against the actual score the target image was categorised into and a simple sum and average of successes was calculated to determine the accuracy of the test. The evaluation and results are discussed in the chapter 4.
+For qualitative testing, a random sample size of 20 generated IHC images were chosen via a python script (available from source in Appendix A). to avoid any selection bias and were independently evaluated by an expert Pathologist. The pathologist's score was compared against the actual score the target image was categorised into and a simple sum and average of successes was calculated to determine the accuracy of the test. The evaluation and results are discussed in the chapter 4.
 
 % ---------------------------------------------------------------------------
 % ----------------------- end of thesis sub-document ------------------------

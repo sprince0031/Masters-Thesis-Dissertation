@@ -16,7 +16,7 @@
 
 % ----------------------- contents from here ------------------------
 
-The methodology used to perform stain transfer from H\&E whole slide image patches to the IHC patches leverages a pre-trained Stable Diffusion model with a ControlNet implementation integrated which will be responsible for directed stain transfer. The chapter is organised into distinct phases which are dataset preparation, ControlNet integration, model training and evaluation.
+The methodology used to perform stain transfer from H\&E whole slide image patches to the IHC patches leverages a pretrained Stable Diffusion model with a ControlNet implementation integrated which is responsible for directed stain transfer. The chapter is organised into distinct phases which are dataset preparation, ControlNet integration, model training and evaluation.
 
 \section{Dataset Preparation}
 
@@ -32,7 +32,7 @@ It contains 4,870 H\&E-IHC image pairs of resolution 1024 X 1024 that were cut f
     \label{fig:BCI-data-dist}
 \end{figure}
 
-In terms of the image pairs themselves, they were already structurally aligned by \parencite{Liu2022BCI:Pix2pix} such that they achieve maximum possible overlap. This is achieved by methods of projection transformation and elastix registration \parencite{Klein2010Elastix:Registration}  with the former resulting in a rough overlap between the two image types and subsequently the latter performing a "regional fine-grained non-rigid registration" \parencite[p. 5]{Liu2022BCI:Pix2pix}. 
+In terms of the image pairs themselves, they were already structurally aligned by \textcite{Liu2022BCI:Pix2pix} such that they achieve maximum possible overlap. This is achieved by methods of projection transformation and Elastix registration \parencite{Klein2010Elastix:Registration}  with the former resulting in a rough overlap between the two image types and subsequently the latter performing a "regional fine-grained non-rigid registration" \parencite[p. 5]{Liu2022BCI:Pix2pix}. 
 
 Though this dataset is very good in terms of pairing and general structural alignment, it is not free of a common issue faced by most such histopathology image datasets which is having a uniform stain colour profile. This is unavoidable in practice as it depends on many factors such as equipment, lighting, etc. Again, in this study, no intentional stain normalisation technique was used. Stress testing the capabilities of Stable Diffusion and allowing for all these variations to see how it would handle it was also a point of interest given its reputation for "artistic sensibilities".
 
@@ -50,7 +50,7 @@ The source image is normalised to [0, 1] to ensure stability in training and is 
 
 \subsection{Data split}
 
-The BCI data was already split into train and test classes with there being 3,896 and 977 pairs respectively by \parencite{Liu2022BCI:Pix2pix}. From the 977 test pairs, 40 pairs were moved to a separate validation pair to be used only in the future in the event of final pre-production testing. This provides a split ratio of approximately 80/20. The images are split into two folders namely, ''HE" and "IHC" and there are the three train, test and validation folders inside each that all contain the afore-mentioned splits of images. The file names of the images contain labelling data such as if it is a training image and its IHC score.
+The BCI data was already split into train and test classes with there being 3,896 and 977 pairs respectively by \textcite{Liu2022BCI:Pix2pix}. From the 977 test pairs, 40 pairs were moved to a separate validation pair to be used only in the future in the event of final pre-production testing. This provides a split ratio of approximately 80/20. The images are split into two folders namely, ''HE" and "IHC" and there are the three train, test and validation folders inside each that all contain the aforementioned splits of images. The file names of the images contain labelling data such as if it is a training image and its IHC score.
 
 In the code implementation, a class called "HE\_IHC\_Dataset" that inherits the PyTorch Dataset class was written and it provides the core dataset access functionality from the file system. It returns a dictionary containing the H\&E image, IHC image, corresponding IHC score as the text prompt and the file name which correspond to the keys, "hint", "jpg", "txt" and "imgName" as seen in code snippet Figure \ref{fig:he-ihc-dataset-class}.  
 \begin{figure}[ht]
@@ -63,21 +63,21 @@ In the code implementation, a class called "HE\_IHC\_Dataset" that inherits the 
 
 The model will not have a good way to properly distinguish the classes of images just from direct input. Thus to help the model make these connections and be able to have learnt the latent representations of the images to the classes, the model was trained by giving the corresponding prompt. The prompt for each class is structured in the following syntax to give it more embeddings to potentially learn about the classes.
 
-<IHC score>, <Description of the scoring criteria/staining pattern>, <HER2 expression i.e., negative/low expression/equivocal/positive>
+$<$IHC score$>$, $<$Description of the scoring criteria/staining pattern$>$, $<$HER2 expression i.e., negative/low expression/equivocal/positive$>$
 
-The syntax is in essence a combination of all the descriptive parts of information available for a score given by the guidelines (Table \ref{tab:HER2 IHC Scoring Guidelines})
+The syntax is in essence a combination of all the descriptive parts of information available for a score given by the guidelines (Table \ref{tab:HER2 IHC Scoring Guidelines}).
 
 \section{ControlNet Integration}
 
-The fine-tuning code implementation using ControlNet was performed by forking the official ControlNet GitHub repository of \parencite{Zhang2023AddingModels} and creating custom training and testing scripts that incorporate the BCI dataset using the tested and robust ControlNet framework.
+The fine-tuning code implementation using ControlNet was performed by forking the official ControlNet GitHub repository of \textcite{Zhang2023AddingModels} and creating custom training and testing scripts that incorporate the BCI dataset using the tested and robust ControlNet framework.
 
 \subsection{System Setup}
 
-The experiments were performed on an A100 Nvidia 80GB server GPU. A training loop occupied approximately 30GB of VRAM on the GPU and took approximately 13 hours for 50 training epochs. The pre-trained model of Stable Diffusion used was version 2.1.
+The experiments were performed on an A100 Nvidia 80GB server GPU. A training loop occupied approximately 30GB of VRAM on the GPU and took approximately 13 hours for 50 training epochs. The pretrained model of Stable Diffusion used was version 2.1.
 
 \subsection{Prerequisite}
 
-Before starting the training process, there is a prerequisite to be performed which entails copying the weights of the pre-trained SD model to the trainable copy of ControlNet. This functionality is provided by the framework and only requires the running of  a single python script called. "tool\_add\_control.py" (available from source in Appendix A). within the same repository. This script takes two input arguments which are the paths to the downloaded pre-trained SD model in the form of a .ckpt file and the destination path where the trainable copy is to be saved which is also in .ckpt format. This command will look like in the snippet, Figure \ref{fig:copy-sd-control}.
+Before starting the training process, there is a prerequisite to be performed which entails copying the weights of the pretrained SD model to the trainable copy of ControlNet. This functionality is provided by the framework and only requires the running of  a single python script called. "tool\_add\_control.py" (available from source in Appendix A). within the same repository. This script takes two input arguments which are the paths to the downloaded pretrained SD model in the form of a .ckpt file and the destination path where the trainable copy is to be saved which is also in .ckpt format. This command will look like in the snippet, Figure \ref{fig:copy-sd-control}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{4_ResearchMethodology/figures/ckpt_copy.png}
@@ -95,7 +95,7 @@ shows the architecture of a ControlNet's trainable U-Net copy providing addition
     \caption[ControlNet architecture]{ControlNet implementation with all SD layers locked \parencite[Figure 3, p. 4 ]{Zhang2023AddingModels}}
     \label{fig:controlnet-sd-locked}
 \end{figure}
-The changes to the hyper-parameters for each variation is tabulated in Table \ref{tab:training-variation} of which there are only two. The second parameter is self-explainable. For the learning rate, going with a slower rate of learning when allowing the weights on the original SD model layers to be trained is recommended because the model will then potentially get downgraded when it learns only from a new specific source of data.
+The changes to the hyper-parameters for each variation is tabulated in Table \ref{tab:training-variation} of which there are only two. The second parameter is self-explainable. For the learning rate, going with a slower rate of learning when allowing the weights on the original SD model's layers to be trained is recommended because the model will then potentially get downgraded when it learns only from a new specific source of data.
 
 \begin{table}[H]
 \begin{center}
@@ -112,7 +112,7 @@ Other than these, the constant hyper-parameters used are a batch size of 4, the 
 
 \section{Evaluation}
 
-The framework also uses the very powerful PyTorch Library module which already has a lot of automation built in for running train-validation loops, logging metrics and so on. The framework logs loss statistics to a Tensorboard compatible file which can then be fired up to gain insights in to important training statistics like loss over epochs/steps. There is also a logger training callback function that can be used to setup sampling of the generated training images to then be logged for giving us active insight to the progress of the model. The number of logging steps was set to 300 and this would run every 4 times per epoch given there are 974 batches with a batch size of 4. The final logged sample for the better performing model i.e., variation 1 is shown in Figure \ref{fig:best-train-log}.
+The framework also uses the very powerful PyTorch Lightning module which already has a lot of automation built in for running train-validation loops, logging metrics and so on. The framework logs loss statistics to a Tensorboard compatible file which can then be fired up to gain insights on important training statistics like loss over epochs/steps. There is also a logger training callback function that can be used to setup sampling of the generated training images to then be logged for giving us active insight to the progress of the model. The number of logging steps was set to 300 and so this would run every 4 times per epoch given there are 974 batches with a batch size of 4. The final logged sample for the better performing model i.e., variation 1 is shown in Figure \ref{fig:best-train-log}.
 
 \begin{figure}[ht]
     \centering
@@ -121,19 +121,19 @@ The framework also uses the very powerful PyTorch Library module which already h
     \label{fig:best-train-log}
 \end{figure}
 
-The framework is set to randomly sample the number of images according to our batch size and this was one of the best results from training after looking at multiple samples qualitatively. The model seems to be able to learn to mimic the edges and overall stain structure well. However, the reconstructed target IHC have all taken on a blue hue rather than it's original brown and thus the network has learnt this behaviour as well. This is likely happening at the sampling step when it is getting trained to remove noise from the images. This should not happen and the original target should be reconstructed and this behaviour needs further investigation. This however isn't as detrimental to evaluation of the images as for IHC scoring it is the intensity of membrane staining that is considered and not the actual colour itself. Thus we can still proceed with evaluation. The model seems to have been able to make the class distinctions though they are directly more influenced by the presence of the prompt detailing the class.
+The framework is set to randomly sample the number of images according to our batch size and this was one of the best results from training after looking at multiple samples qualitatively. The model seems to be able to learn to mimic the edges and overall stain structure well. However, the reconstructed target IHC have all taken on a blue hue rather than it's original brown and thus the network has learnt this behaviour as well. This is likely happening at the sampling step when it is getting trained to remove noise from the images. This should not happen and the original target should be reconstructed and this behaviour needs further investigation. This however isn't detrimental to evaluation of the images for IHC scoring as it is the intensity of membrane staining that is considered and not the actual colour itself. Thus we can still proceed with evaluation. The model seems to have been able to make the class distinctions though they are directly more influenced by the presence of the prompt detailing the class.
 
 \subsection{Testing the Models}
 
-For model performance evaluation, the test set is used to generate corresponding IHC stains for the input H\&E stains. There were again two variations of the testing evaluated. One is by adding the corresponding prompt for he generation as an input signal while the other is seeing how it performs without the prompt. The testing was performed by running 2 custom test scripts, one for each test condition (available from source in Appendix A). This was also performed for both trained variations of the models i.e., with SD control 'True' and 'False'.
+For model performance evaluation, the test set is used to generate corresponding IHC stains for the input H\&E stains. There were again two variations of the testing evaluated. One is by adding the corresponding prompt along with the H\&E image patches as input signals while the other is seeing how it performs without the prompt. The testing was performed by running 2 custom test scripts, one for each test condition (available from source in Appendix A). This was also performed for both trained variations of the models i.e., with SD control 'True' and 'False'.
 
 \subsection{Performance Evaluation}
 
-Comparing and evaluating the results for this project is not a straightforward task. The task of comparing an image to an attempted imitation of it is not a process that any algorithm can decipher easily. The results of this type where structural variations can be acceptable if the overall pattern is very similar to the original can have merits and can be enough for providing a highly accurate IHC score that can inform pathologists faster than the manual scoring method. 
+Comparing and evaluating the results for this project is not a straightforward task. The task of comparing an image to an attempted imitation of it is not a process that any algorithm can judge and evaluate easily. The results of this type where structural variations can be acceptable if the overall pattern is very similar to the original can have merits and can be enough for providing a highly accurate IHC score that can inform pathologists faster than the manual scoring method. 
 
-Nonetheless, for this thesis, two main categories of evaluation were carried out; quantitative and qualitative. The quantitative method consists of using the Peak Signal to Noise Ratio (PSNR) and Structural Similarity (SSIM) evaluation metrics. PSNR performs a rigid pixel-to-pixel comparison which does not really paint the full picture while the SSIM method takes into account the differences in the image brightness, contrast and structure. While still not a very good benchmark to fully analyse a pair of results, it is certainly fair than PSNR.
+Nonetheless, for this thesis, two main categories of evaluation were carried out; quantitative and qualitative. The quantitative method consists of using the Peak Signal to Noise Ratio (PSNR) and Structural Similarity (SSIM) evaluation metrics. PSNR performs a rigid pixel-to-pixel comparison which does not really paint the full picture while the SSIM method takes into account the differences in the image brightness, contrast and structure. While still not a very good benchmark to fully analyse a pair of results, it is certainly fairer than PSNR.
 
-For qualitative testing, a random sample size of 20 generated IHC images were chosen via a python script (available from source in Appendix A). to avoid any selection bias and were independently evaluated by an expert Pathologist. The pathologist's score was compared against the actual score the target image was categorised into and a simple sum and average of successes was calculated to determine the accuracy of the test. The evaluation and results are discussed in the chapter 4.
+For qualitative testing, a random sample size of 20 generated IHC images were chosen via a python script (results available in the jupyter notebook viewable from source in Appendix A called, "$dissertation\_main\_results\_notebook.ipynb$") to avoid any selection bias and were independently evaluated by an expert Pathologist. The pathologist's score was compared against the actual score the target image was categorised into and a simple sum and average of successes was calculated to determine the accuracy of the test. The evaluation and results are discussed in the chapter 4.
 
 % ---------------------------------------------------------------------------
 % ----------------------- end of thesis sub-document ------------------------

@@ -18,14 +18,14 @@ This chapter consists of discussions about the various results and performance m
 
 \subsection{Model variation 1: SD Locked}
 
-This was the best performing model out of the two with stark differences in the quality of generated images being observed even at the training phase. The Figures \ref{fig:mod1-train-loss-epoch} and \ref{fig:mod1-train-loss-epoch-smooth} represent the same loss with loss value plotted against number of epochs. From the first graph we can see that the loss has been very erratic and it unable to get to a convergence point. In fact, at around 20k steps ($\approx 20  epochs$), the epoch loss has managed to reach the lowest loss of 0.1763 while the last epoch i.e., 50 ended the training with the second lowest of 0.1778. The immediate realisation is that learning rate would need to be lowered.
+This was the best performing model out of the two with stark differences in the quality of generated images being observed even at the training phase. The Figures \ref{fig:mod1-train-loss-epoch} and \ref{fig:mod1-train-loss-epoch-smooth} represent the same loss with loss value plotted against number of epochs. From the first graph we can see that the loss has been very erratic and it is unable to get to a convergence point. In fact, at around 20k steps ($\approx 20  epochs$), the epoch loss has managed to reach the lowest loss of 0.1763 while the last epoch i.e., 50 ended the training with the second lowest of 0.1778. The immediate realisation is that learning rate would need to be lowered.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/var1-train-epoch-loss.png}
     \caption{Model 1: Train loss/epoch}
     \label{fig:mod1-train-loss-epoch}
 \end{figure}
-But when the smoothed curve is observed, there is an overall down slope to the learning which suggests that the training is in general moving in a positive direction but perhaps it would yield better results if the number of epochs were to be increased and training continued for a longer period of time. In fact, 50 epochs is not a high number at all when most such training projects train for epochs in the range of thousands. There is also an interesting note observed by the author \parencite[Figure 4, p. 5]{Zhang2023AddingModels} where the phenomenon of sudden convergence is observed after enough training steps. It should also be noted that ControlNets are mainly used with adding image masks such as depth, edge, segmentation maps as their control input for training which would contain way lesser spatial and structural data and more rigidity to the outcomes. With our use case being two different staining domains, these variations in performance is to be expected. 
+But when the smoothed curve is observed, there is an overall down slope to the learning which suggests that the training is in general moving in a positive direction and perhaps it would yield better results if the number of epochs were to be increased and training continued for a longer period of time. In fact, 50 epochs is not a high number at all when most such projects train for epochs in the range of thousands. There is also an interesting note observed by the author \parencite[Figure 4, p. 5]{Zhang2023AddingModels} with ControlNets where the phenomenon of sudden convergence is observed after enough training steps. It should also be noted that ControlNets are mainly used with adding image masks such as depth, edge, segmentation maps as their control input for training which would contain way lesser spatial and structural data and more rigidity to the outcomes. With our use case being two different staining domains, these variations in performance is to be expected. 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/model-1-train-loss-epoch-smooth.png}
@@ -33,7 +33,7 @@ But when the smoothed curve is observed, there is an overall down slope to the l
     \label{fig:mod1-train-loss-epoch-smooth}
 \end{figure}
 
-The four Figures \ref{fig:train-log-source-e20-s900}, \ref{fig:train-log-target-e20-s900}, \ref{fig:train-log-sample-e20-s900} and \ref{fig:train-log-prompt-e20-s900} is a training render sample that corresponds to the $900^{th}$ step in epoch 20 of training which is where the least loss was observed. This too has good structural and intensity mapping in the generated images. The colouring on the membranes of the cells and the patterns formed are very much comparable when performing a the simple eye test.
+The four Figures \ref{fig:train-log-source-e20-s900}, \ref{fig:train-log-target-e20-s900}, \ref{fig:train-log-sample-e20-s900} and \ref{fig:train-log-prompt-e20-s900} are training render samples that corresponds to the $900^{th}$ step in epoch 20 of training which is where the least loss was observed. This too has good structural and intensity mapping in the generated images. The colouring on the membranes of the cells and the patterns formed are very much comparable when performing a the simple eye test.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/control_gs-020380_e-000020_b-000900.png}
@@ -52,29 +52,31 @@ The four Figures \ref{fig:train-log-source-e20-s900}, \ref{fig:train-log-target-
     \caption[Generated IHC images for train log at e=20, steps=900]{IHC Stain - Generated}
     \label{fig:train-log-sample-e20-s900}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/conditioning_gs-020380_e-000020_b-000900.png}
-    \caption[Input prompts for train log at e=20, steps=900]{IHC Score + Prompt. IHC scores from left to right are 2+. 2+. 1+ and 3+}
+    \caption[Input prompts for train log at e=20, steps=900]{IHC Score + Prompt. IHC scores from left to right are 2+, 2+, 1+ and 3+}
     \label{fig:train-log-prompt-e20-s900}
 \end{figure}
 
 \subsection{Model variation 1: SD Unlocked}
 
 From the loss metrics of Figures \ref{fig:mod2-train-loss-epoch} and \ref{fig:mod2-train-loss-epoch-smooth}, there is a lot more variability here between epochs. The smoothed graph also suggests a plateaued trend line. But, from the loss curve, we can see that the penultimate epoch of 49 achieved a loss of 0.1756 which is slightly lower than the least value from model 1. This seems to suggest that training the SD layers along with the copy has the potential for better fitting with the objective but the number of epochs might again be too low to make any definitive conclusion.
-\begin{figure}[h]
+
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/sd2-train-loss-epoch.png}
     \caption{Model 2: Train loss/epoch}
     \label{fig:mod2-train-loss-epoch}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/model-2-train-epoch-loss-smooth.png}
     \caption{Model 2: Train loss/epoch with smoothing=0.9}
     \label{fig:mod2-train-loss-epoch-smooth}
 \end{figure}
+
 
 \section{Objective Evaluation}
 
@@ -91,11 +93,11 @@ Pyramid pix2pix& \textbf{21.160}& \textbf{0.477}\\ \hline
 SD Locked (with prompt)& 14.54& 0.3808\\ \hline
 SD Locked (without prompt)& 11.86& 0.3084\\ \hline
 \end{tabular}
-\caption[PSNR and SSIM metrics for the models discussed]{PSNR and SSIM metrics for the models discussed. Note that the CycleGAN and two pix2pix implementation metrics have been taken from \textcite{Liu2022BCI:Pix2pix}[Table 1, p. 7]}\label{tab:obj-results}
+\caption[PSNR and SSIM metrics for the models]{PSNR and SSIM metrics for the models. Note that the CycleGAN and the two pix2pix implementation metrics have been taken from \textcite{Liu2022BCI:Pix2pix}[Table 1, p. 7]}\label{tab:obj-results}
 \end{center}
 \end{table}
 
-From these metrics, the Pyramid pix2pix model is still the one to beat by a long shot compared to our models. The only gain than any other model is in the SSIM category against CycleGAN which is already relatively obsolute for this field. Also, as expected, the model tested with the prompt is the better performing model with a 0.08 point lead compared to the test without prompts ad isn't too bad compared to pix2pix(unet). This gives hope that considering for how little time it was trained, there and the loss trend, there is alot of growth for improvement with just more training and experimentation with hyper-parameters like learning rate.
+From these metrics, the Pyramid pix2pix model is still the one to beat by a long shot compared to our models. The only gain than any other model is in the SSIM category against CycleGAN which is already relatively obsolete for this field. Also, as expected, the model tested with the prompt is the better performing model with a 0.08 point lead in the SSIM category compared to the test without prompts. It isn't too far behind pix2pix(unet) either. This gives hope that considering for how little time it was trained and the loss trend, there is a lot of growth for improvement with just more training and experimentation with hyper-parameters like learning rate.
 
 \section{Subjective Validation}
 
@@ -106,16 +108,16 @@ From these metrics, the Pyramid pix2pix model is still the one to beat by a long
     \label{fig:sub-eval-grid}
 \end{figure}
 
-For the subjective validation of manual scoring of 20 random generated IHC images the accuracy turned out to be on par with the highest accuracy obtained by two independent pathologists in the case of \textcite{Liu2022BCI:Pix2pix}[Table 5, p. 8] which \textbf{40\%}. Now, this is not an extensive sample size and in the paper they selected 40 images instead of 20. But again, as we've seen in previous examples, there is a lot of potential.
+For the subjective validation,  20 random generated IHC images from the test dataset was manually scored by an expert pathologist and these scores were compared against the given score in the dataset. The accuracy turned out to be on par with the highest accuracy obtained by two independent pathologists in the case of \textcite{Liu2022BCI:Pix2pix}[Table 5, p. 8] which is \textbf{40\%}. Now, this is not an extensive sample size and in the paper they selected 40 images instead of 20. But again, as we've seen in previous examples, there is a lot of potential.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{5_Results/figures/subj-eval-confusion-matrix.png}
-    \caption{Confusion matrix report of subjective validation resilts}
+    \caption{Confusion matrix report of subjective validation results}
     \label{fig:conf-mat}
 \end{figure}
 
-Figure \ref{fig:conf-mat} shows the various accuracies across the four classes with 3+ performing the best understandably because these images have the most distinguishable morphological features standing out from the IHC stain. 2+ had a zero percent accuracy with it being mistaken for the 1+ class over 7 times by the model. There are also no successful class 0 predictions and the lack of candidates in the sample size again points out the data imbalance issue with the dataset.
+Figure \ref{fig:conf-mat} shows the various accuracies across the four classes with 3+ performing the best understandably because these images have the most distinguishable morphological features standing out from the IHC stain. 2+ had a zero percent accuracy with the generated images being mistaken for the 1+ class 7 times by the expert pathologist. This shows a clear lack of quality in the generated 2+ images. There are also no successful class 0 predictions and the lack of candidates in the sample size again points out the data imbalance issue with the dataset. It was noted by the pathologist during the test that images with dot-like or nuclear staining generated by the model would automatically constitute to it being scored 0 because it is the membranous staining that they are looking for. Hence the three images scored 0 here would fall into that category. The red dot-like structures being generated in the images will need further investigation as they are distinct from any of the input images seen during training. 
 
 \section{Key Limitations}
 
